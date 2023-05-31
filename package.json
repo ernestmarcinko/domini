@@ -1,6 +1,6 @@
 {
     "name": "domini",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Minimalistic DOM manipulation tool",
     "main": "dist/domini.js",
     "scripts": {
@@ -11,7 +11,7 @@
     },
     "repository": {
       "type": "git",
-      "url": "git+https://github.com/anag0/typewriter.git"
+      "url": "git+https://github.com/anag0/domini.git"
     },
     "keywords": [
         "dom",
@@ -28,9 +28,9 @@
     "author": "Ernest Marcinko",
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/anag0/typewriter/issues"
+      "url": "https://github.com/anag0/domini/issues"
     },
-    "homepage": "https://github.com/anag0/typewriter#readme",
+    "homepage": "https://github.com/anag0/domini#readme",
     "devDependencies": {
       "webpack": "^5.83.1",
       "webpack-cli": "^4.10.0",
