@@ -16,8 +16,10 @@
 
     <script>
         DoMini(function($){ 
-            console.log('sup');
-            console.log($, arguments) 
+            $('#h1').text('Hi!');
+            $('#h1').animate({
+                "marginLeft": 300
+            }, 1000);
         });
     </script>
 </body>

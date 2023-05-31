@@ -17,7 +17,7 @@ module.exports = [{
         entry: './src/DoMiniCore.js',
         output: {
             library: {
-                name: 'DoMiniCore',
+                name: 'DoMini',
                 type: 'umd',
                 export: 'default',
                 umdNamedDefine: true
