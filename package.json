@@ -1,0 +1,40 @@
+{
+    "name": "domini",
+    "version": "0.1",
+    "description": "Minimalistic DOM manipulation tool",
+    "main": "dist/domini.js",
+    "scripts": {
+      "build": "webpack --mode=production --node-env=production",
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build:dev": "webpack --mode=development --watch",
+      "build:prod": "webpack --mode=production --node-env=production"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/anag0/typewriter.git"
+    },
+    "keywords": [
+        "dom",
+        "dom manipulation",
+        "library",
+        "dom library",
+        "jquery alternative"
+    ],
+    "files": [
+      "dist",
+      "examples.html",
+      "readme.md"
+    ],
+    "author": "Ernest Marcinko",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/anag0/typewriter/issues"
+    },
+    "homepage": "https://github.com/anag0/typewriter#readme",
+    "devDependencies": {
+      "webpack": "^5.83.1",
+      "webpack-cli": "^4.10.0",
+      "webpack-dev-server": "^4.15.0",
+      "workbox-webpack-plugin": "^6.5.4"
+    }
+  }
