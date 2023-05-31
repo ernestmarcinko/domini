@@ -17,13 +17,13 @@ yarn add domini
 If you prefer a build, use the CDN version
 
 ```html
-<script src="https://unpkg.com/@anag0/typewriter@latest/dist/domini.js"></script>
+<script src="https://unpkg.com/@anag0/domini@latest/dist/domini.js"></script>
 ```
 
 ..if you don't need the modules (animate, highlight, serialize, xhttp) then you can use a trimmed core version:
 
 ```html
-<script src="https://unpkg.com/@anag0/typewriter@latest/dist/domini-core.js"></script>
+<script src="https://unpkg.com/@anag0/domini@latest/dist/domini-core.js"></script>
 ```
 
 ## Usage
