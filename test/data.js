@@ -1,4 +1,4 @@
-QUnit.module("Set title", function(hooks) {
+QUnit.module("data.js tests", function(hooks) {
     var $ = DoMini;
     hooks.beforeEach(function() {
         var f = document.getElementById('qunit-fixture');
