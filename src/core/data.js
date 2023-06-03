@@ -67,19 +67,20 @@ DoMini.fn.prop = function(a, v) {
 };
 
 DoMini.fn.data = function(d, v) {
-    let el = this.get(0),
-        s = d.replace(/-([a-z])/g, function (g) {
+    const s = d.replace(/-([a-z])/g, function (g) {
         return g[1].toUpperCase();
     });
-    if ( el != null ) {
-        if ( arguments.length == 2 ) {
-            el.dataset[s] = v;
-            return this;
-        } else {
-            return typeof el.dataset[s] == "undefined" ? '' : el.dataset[s];
-        }
+    if ( arguments.length == 2 ) {
+        this.forEach((el) => {
+            if ( el != null ) {
+                el.dataset[s] = v;
+            }
+        });
+        return this;
+    } else {
+        let el = this.get(0);
+        return el != null & typeof el.dataset[s] == "undefined" ? '' : el.dataset[s];
     }
-    return '';
 };
 
 DoMini.fn.html = function(v) {
