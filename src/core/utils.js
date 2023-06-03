@@ -72,7 +72,7 @@ DoMini._fn.allDescendants = function(node) {
 DoMini._fn.createElementsFromHTML = function(htmlString) {
     let template = document.createElement('template');
     template.innerHTML = htmlString.replace(/(\r\n|\n|\r)/gm, "");
-    return Array.prototype.slice.call(template.content.childNodes);
+    return [...template.content.childNodes];
 };
 
 DoMini._fn.absolutePosition = function(el) {
