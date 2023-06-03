@@ -1,29 +1,7 @@
 import DoMini from "../base";
 
 DoMini.fn.get = function (n) {
-    return typeof n == "undefined" ? this.a.slice() : (typeof this.a[n] != 'undefined' ? this.a[n] : null);
-};
-
-DoMini.fn._ = function (s) {
-    if ( s.charAt(0) === '<' ) {
-        return DoMini._fn.createElementsFromHTML(s);
-    }
-    return Array.prototype.slice.call(document.querySelectorAll(s));
-};
-
-DoMini.fn.$ = function (s, $node) {
-    let _this = this.copy(this, true);
-    if ( typeof $node != "undefined" ) {
-        _this.a = $node !== null ? $node.find(s).get() : [];
-    } else {
-        if (typeof s == "string") {
-            _this.a = _this._(s);
-        } else {
-            _this.a = s!== null ? [s] : [];
-        }
-    }
-    _this.length = _this.a.length;
-    return _this;
+    return typeof n == "undefined" ? Array.from(this) : this[n];
 };
 
 DoMini.fn.extend = function () {
@@ -35,7 +13,7 @@ DoMini.fn.extend = function () {
 }
 
 DoMini.fn.forEach = function (callback) {
-    this.a.forEach(function (node, index, array) {
+    this.get().forEach(function (node, index, array) {
         callback.apply(node, [node, index, array]);
     });
     return this;

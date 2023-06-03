@@ -110,7 +110,7 @@ DoMini.fn.offForced = function(){
     this.forEach(function(el, i){
         let ne = el.cloneNode(true);
         el.parentNode.replaceChild(ne, el);
-        _this.a[i] = ne;
+        _this[i] = ne;
     });
     return this;
 };

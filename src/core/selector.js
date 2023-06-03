@@ -10,6 +10,22 @@ DoMini.fn.is = function(s){
 
 DoMini.fn.parent = function (s) {
     let el = this.get(0);
+    if (el != null) {
+        this.splice(0, this.length);
+        el = el.parentElement;
+        if (typeof s != 'undefined') {
+            if ( el.matches(s) ) {
+               this.push(el);
+            }
+        } else {
+            this.push(el);
+        }
+    }
+    return DoMini(this[0]);
+};
+
+/*DoMini.fn.parent = function (s) {
+    let el = this.get(0);
     let _this = this.copy(this, true);
     _this.a = [];
     if (el != null) {
@@ -24,7 +40,7 @@ DoMini.fn.parent = function (s) {
         return _this;
     }
     return _this;
-};
+};*/
 
 DoMini.fn.copy = function(source, deep) {
     let o, prop, type;
@@ -48,19 +64,44 @@ DoMini.fn.copy = function(source, deep) {
 };
 
 DoMini.fn.first = function () {
-    let _this = this.copy(this, true);
+    /*let _this = this.copy(this, true);
     _this.a = typeof _this.a[0] != 'undefined' ? [_this.a[0]] : [];
     _this.length = _this.a.length;
-    return _this;
+    return _this;*/
+    this.splice(0, 1);
+    return DoMini(this[0]);
 };
 
 DoMini.fn.last = function () {
-    let _this = this.copy(this, true);
+    /*let _this = this.copy(this, true);
     _this.a = _this.a.length > 0 ? [_this.a[_this.a.length - 1]] : [];
     _this.length = _this.a.length;
-    return _this;
+    return _this;*/
+    this.splice(-1, 1);
+    return DoMini(this[0]);
 };
 
+DoMini.fn.prev = function (s) {
+    const el = this.get(0);
+    let prev = null;
+    
+    if ( el != null ) {
+        if ( typeof s == "undefined" ) {
+            prev = el.previousElementSibling;
+        } else {
+            prev = el.previousElementSibling;
+            while ( prev != null ) {
+                if ( prev.matches(s) ) {
+                    break;
+                }
+                prev = prev.previousElementSibling;
+            }
+        }
+    }
+
+    return DoMini(prev);
+};
+/*
 DoMini.fn.prev = function (s) {
     let _this = this.copy(this, true);
     if ( typeof s == "undefined" ) {
@@ -82,7 +123,29 @@ DoMini.fn.prev = function (s) {
     _this.length = _this.a.length;
     return _this;
 };
+*/
 
+DoMini.fn.next = function (s) {
+    const el = this.get(0);
+    let next = null;
+    
+    if ( el != null ) {
+        if ( typeof s == "undefined" ) {
+            next = el.nextElementSibling;
+        } else {
+            next = el.nextElementSibling;
+            while ( next != null ) {
+                if ( next.matches(s) ) {
+                    break;
+                }
+                next = next.nextElementSibling;
+            }
+        }
+    }
+    
+    return DoMini(next);
+};
+/*
 DoMini.fn.next = function (s) {
     let _this = this.copy(this, true);
     if ( typeof s == "undefined" ) {
@@ -103,7 +166,7 @@ DoMini.fn.next = function (s) {
     }
     _this.length = _this.a.length;
     return _this;
-};
+};*/
 
 DoMini.fn.closest = function (s) {
     let el = this.get(0);
