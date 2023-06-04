@@ -11,33 +11,24 @@ DoMini.fn.clone = function() {
     return this;
 };
 
-DoMini.fn.remove = function(elem) {
+DoMini.fn.detach = function(elem) {
+    let context = this, removed = [];
     if ( typeof elem != "undefined" ) {
-        return elem.parentElement.removeChild(elem);
-    } else {
-        this.forEach(function(el) {
-            if ( el.parentElement != null ) {
-                return el.parentElement.removeChild(el);
-            }
-        });
-        this.splice(0, this.length);
-        return null;
+        context = this.find(elem);
     }
-};
-
-DoMini.fn.detach = function() {
-    let _this = this, n = [];
-    this.forEach(function(elem){
-        let el = _this.remove(elem);
-        if ( el != null ) {
-            n.push(el)
+    context.forEach(function(el) {
+        if ( el.parentElement != null ) {
+            removed.push(el.parentElement.removeChild(el));
         }
     });
-    this.splice(0, this.length);
-    this.push(...n);
-    return this;
+    return DoMini(null).add(removed);
 };
 
+DoMini.fn.remove = function(selector) {
+    return this.detach(selector).off();
+};
+
+// @todo
 DoMini.fn.prepend = function(prepend) {
     if ( typeof prepend == 'string' ) {
         prepend = DoMini._fn.createElementsFromHTML(prepend);
@@ -57,6 +48,7 @@ DoMini.fn.prepend = function(prepend) {
     return this;
 };
 
+// @todo
 DoMini.fn.append = function(append) {
     if ( typeof append == 'string' ) {
         append = DoMini._fn.createElementsFromHTML(append);

@@ -119,6 +119,8 @@ DoMini.fn.add = function( el ) {
         toAdd = el.get();
     } else if ( el instanceof HTMLElement ) {
         toAdd = [el];
+    } else if ( el instanceof Array ) {
+        toAdd = el;
     }
     if ( toAdd.length > 0 ) {
         this.push(...toAdd);

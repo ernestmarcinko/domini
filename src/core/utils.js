@@ -43,11 +43,11 @@ DoMini._fn.hasFixedParent = function(el) {
 };
 
 DoMini._fn.hasEventListener = function(el, type, trigger) {
-    if (typeof el._el == "undefined") {
+    if (typeof el._domini_events == "undefined") {
         return false;
     }
-    for (let i = 0; i < el._el.length; i++) {
-        if ( el._el[i].trigger == trigger && el._el[i].type == type ) {
+    for (let i = 0; i < el._domini_events.length; i++) {
+        if ( el._domini_events[i].trigger == trigger && el._domini_events[i].type == type ) {
             return true;
         }
     }
