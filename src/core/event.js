@@ -4,7 +4,7 @@ DoMini.fn.on = function() {
     let args = arguments,
         func = function(args, e) {
             let $el;
-            if ( e.type == 'mouseenter' || e.type == 'mouseleave' || e.type == 'hover' ) {
+            if ( e.type == 'mouseenter' || e.type == 'mouseleave' || e.type == 'mouseover' ) {
                 let el = document.elementFromPoint(e.clientX, e.clientY);
                 if ( !el.matches(args[1]) ) {
                     // noinspection StatementWithEmptyBodyJS
@@ -81,23 +81,23 @@ DoMini.fn.off = function(listen, callback) {
                 el._el = [];
             } else {
                 listen.split(' ').forEach(function(type){
-                    if (typeof callback == "undefined") {
-                        let cb;
-                        while (cb = el._el.pop()) {
+                    let cb;
+                    let remains = [];
+                    while (cb = el._el.pop()) {
+                        console.log(cb.type == type);
+                        if ( 
+                            cb.type == type &&
+                            ( 
+                                typeof callback == "undefined" ||
+                                cb.trigger == callback
+                            )
+                        ) {
                             el.removeEventListener(type, cb.func, cb.args);
+                        } else {
+                            remains.push(cb);
                         }
-                        el._el = [];
-                    } else {
-                        let remains = [];
-                        el._el.forEach(function(cb){
-                            if ( cb.type == type && cb.trigger == callback ) {
-                                el.removeEventListener(type, cb.func, cb.args);
-                            } else {
-                                remains.push(cb);
-                            }
-                        });
-                        el._el = remains;
                     }
+                    el._el = remains;
                 });
             }
         }

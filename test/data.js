@@ -15,7 +15,7 @@ QUnit.module("data.js tests", function(hooks) {
 
     QUnit.test('text()', function(assert) {    
         assert.expect(3);
-        var title = document.getElementById('title').innerText;
+        var title = document.getElementById('title').textContent;
         assert.equal(title, $('#title').text());
         assert.equal('', $('#nonexistentnode').text());
         assert.notEqual($('#title').text(), '');

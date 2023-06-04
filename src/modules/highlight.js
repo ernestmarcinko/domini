@@ -8,10 +8,10 @@
  * Licensed under MIT license.
  *
  */
-
 import DoMini from "../base";
 
 DoMini.fn.unhighlight = function (options) {
+    const $ = DoMini;
     let settings = {className: 'highlight', element: 'span'};
     $.fn.extend(settings, options);
 
@@ -23,6 +23,7 @@ DoMini.fn.unhighlight = function (options) {
 };
 
 DoMini.fn.highlight = function (words, options) {
+    const $ = DoMini;
     let settings = {
         className: 'highlight',
         element: 'span',

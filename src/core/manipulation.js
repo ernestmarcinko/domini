@@ -3,15 +3,11 @@ import DoMini from "../base";
 DoMini.fn.clone = function() {
     let el = this.get(0);
     if ( el != null ) {
-        //this.a = [el.cloneNode(true)];
-        //this.length = this.a.length;
         this.splice(0, this.length);
         this.push(el.cloneNode(true));
     } else {
-        //this.a = [];
         this.splice(0, this.length);
     }
-    //this.length = this.a.length;
     return this;
 };
 
@@ -24,8 +20,6 @@ DoMini.fn.remove = function(elem) {
                 return el.parentElement.removeChild(el);
             }
         });
-        //this.a = [];
-        //this.length = this.a.length;
         this.splice(0, this.length);
         return null;
     }
@@ -39,8 +33,6 @@ DoMini.fn.detach = function() {
             n.push(el)
         }
     });
-    //this.a = n;
-    //this.length = this.a.length;
     this.splice(0, this.length);
     this.push(...n);
     return this;
