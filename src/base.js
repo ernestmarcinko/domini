@@ -33,8 +33,6 @@ if ( typeof window.DoMini == 'undefined' ) {
 
     // Main functions extended over the nodes
     DoMini.prototype = DoMini.fn = {
-        is_dom: true,
-
         constructor: function (s, node) {
             // Excplicitly set for every DoMini object
             this.length = 0;

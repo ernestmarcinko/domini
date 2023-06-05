@@ -75,6 +75,29 @@ DoMini._fn.createElementsFromHTML = function(htmlString) {
     return [...template.content.childNodes];
 };
 
+/**
+ * Converts any argument to HTML elements array
+ * 
+ * @param {String|DoMini|HTMLElement|Array} any 
+ * @returns {Array<HTMLElement>}
+ */
+DoMini._fn.HTMLElementArrayFromAny = function(any) {
+    if ( typeof any == 'string' ) {
+        any = DoMini(any).get();
+    } else if ( any instanceof DoMini ) {
+        any = any.get();
+    } else if ( any instanceof HTMLElement ) {
+        any = [any];
+    } else if ( any instanceof Array ) {
+        any = any.filter((el)=>{
+            return el instanceof HTMLElement;
+        });
+    } else {
+        return [];
+    }
+    return any;
+};
+
 DoMini._fn.absolutePosition = function(el) {
     if ( !el.getClientRects().length ) {
         return { top: 0, left: 0 };
