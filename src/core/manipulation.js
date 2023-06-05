@@ -58,7 +58,7 @@ DoMini.fn.append = function(append) {
     if ( append.length > 0 ) {
         this.forEach(function(el){
             append.forEach(function(a) {
-                el.appendChild(a.cloneNode(true));
+                el.appendChild(a);
             });
         });
     }
