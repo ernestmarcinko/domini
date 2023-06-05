@@ -84,29 +84,27 @@ DoMini.fn.data = function(d, v) {
 };
 
 DoMini.fn.html = function(v) {
-    let el = this.get(0);
-    if ( el != null ) {
-        if ( arguments.length == 1 ) {
-            el.innerHTML = v;
-            return this;
-        } else {
-            return el.innerHTML;
-        }
+    if ( arguments.length == 1 ) {
+        this.forEach((el)=>{
+            el.innerHTML = v;   
+        });
+        return this;
+    } else {
+        let el = this.get(0);
+        return el == null ? '' : el.innerHTML;
     }
-    return '';
 };
 
 DoMini.fn.text = function(v) {
-    let el = this.get(0);
-    if ( el != null ) {
-        if ( arguments.length == 1 ) {
-            el.textContent = v;
-            return this;
-        } else {
-            return el.textContent;
-        }
+    if ( arguments.length == 1 ) {
+        this.forEach((el)=>{
+            el.textContent = v;   
+        });
+        return this;
+    } else {
+        let el = this.get(0);
+        return el == null ? '' : el.textContent;
     }
-    return '';
 };
 
 export default DoMini;
