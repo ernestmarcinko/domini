@@ -1,4 +1,4 @@
-import DoMini from "./domini-core";
+import DoMini from "./domini-core"; // Import core modules
 
 import "./modules/animate";
 import "./modules/highlight";
