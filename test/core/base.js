@@ -17,7 +17,7 @@ QUnit.module("base.js tests", function(hooks) {
         assert.equal($().length, 0, "$().length = 0");
         assert.equal($(null).length, 0, "$(null).length = 0");
         assert.equal($([]).length, 0, "$([]).length = 0");
-        assert.equal($([][0]).length, 0, "$([][0]).length = 0");
+        assert.equal($(undefined).length, 0, "$(undefined).length = 0");
 
 
         assert.true($title instanceof DoMini, "$('#title') instanceof DoMini"); 

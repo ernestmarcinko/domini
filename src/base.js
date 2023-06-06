@@ -72,11 +72,12 @@ if ( typeof window.DoMini == 'undefined' ) {
 
         // This makes it act more like an array
         push: Array.prototype.push,
+        pop: Array.prototype.pop,
         sort: Array.prototype.sort,
         splice: Array.prototype.splice
     }
 
-    // Define the iterator symbol to the array iterator
+    // Define the iterator symbol to the array iterator, allows "for of.." and derivates
     DoMini.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
     // Utility functions container

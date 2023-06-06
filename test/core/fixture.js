@@ -46,7 +46,7 @@ body {
     </ul>
 </div>
 <div id="list-container-two">
-    <ul>
+    <ul class="ul-item">
         <li class="list-item">list item two 1</li>
         <li class="list-item" id="list-item-2-2">list item two 2</li>
         <li class="list-item">list item two 3</li>

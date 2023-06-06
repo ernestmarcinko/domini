@@ -1,30 +1,33 @@
 import DoMini from "../base";
 
 DoMini.fn.is = function(s){
-    let el = this.get(0);
-    if ( el != null ) {
-        return el.matches(s);
+    let is = false;
+    for ( const el of this ) {
+        if ( el.matches(s) ) {
+            is = true;
+            break;
+        }
     }
-    return false;
+    return is;
 };
 
 DoMini.fn.parent = function (s) {
-    let el = this.get(0);
-    if ( el != null ) {
-        el = el.parentElement;
-        if ( typeof s == 'string' && el != null ) {
-            if ( !el.matches(s) ) {
-               el = null;
+    let elements = [];
+    for ( const el of this ) {
+        let parent = el.parentElement;
+        if ( typeof s == 'string' ) {
+            if ( parent != null && !parent.matches(s) ) {
+                parent = null;
             }
         }
+        elements.push(parent);
     }
-    return DoMini(el);
+    return DoMini().add(elements);
 };
 
 DoMini.fn.copy = function(source, deep) {
     let o, prop, type;
     if (typeof source != 'object' || source === null) {
-        // What do to with functions, throw an error?
         o = source;
         return o;
     }
@@ -43,62 +46,67 @@ DoMini.fn.copy = function(source, deep) {
 };
 
 DoMini.fn.first = function () {
-    this.splice(0, 1);
     return DoMini(this[0]);
 };
 
 DoMini.fn.last = function () {
-    this.splice(-1, 1);
-    return DoMini(this[0]);
+    return DoMini(this[this.length-1]);
 };
 
 DoMini.fn.prev = function (s) {
-    const el = this.get(0);
-    let prev = null;
+    let elements = [];
     
-    if ( el != null ) {
+    for ( const el of this ) {
+        let prev;
         if ( typeof s == "string" ) {
             prev = el.previousElementSibling;
             while ( prev != null ) {
                 if ( prev.matches(s) ) {
+                    elements.push(prev);
                     break;
                 }
                 prev = prev.previousElementSibling;
             }
         } else {
-            prev = el.previousElementSibling;
+            elements.push(el.previousElementSibling);
         }
     }
 
-    return DoMini(prev);
+    return DoMini(null).add(elements);
 };
 
 DoMini.fn.next = function (s) {
-    const el = this.get(0);
-    let next = null;
+    let elements = [];
 
-    if ( el != null ) {
+    for ( const el of this ) {
+        let next;
         if ( typeof s == "string" ) {
             next = el.nextElementSibling;
             while ( next != null ) {
                 if ( next.matches(s) ) {
+                    if ( !elements.includes(next) ) {
+                        elements.push(next);
+                    }
                     break;
                 }
                 next = next.nextElementSibling;
             }
         } else {
-            next = el.nextElementSibling;
+            elements.push(el.nextElementSibling);
         }
     }
     
-    return DoMini(next);
+    return DoMini(null).add(elements);
 };
 
 DoMini.fn.closest = function (s) {
-    let el = this.get(0);
-    if ( el !== null ) {
+    let elements = [];
+    for ( let el of this ) {
         if ( typeof s === "string" && s !== '' ) {
             while ((el = el.parentElement) && !el.matches(s)) ;
+            if ( !elements.includes(el) ) {
+                elements.push(el);
+            }
         } else {
             s = s instanceof DoMini ? s.get(0) : s;
             if ( s instanceof HTMLElement ) {
@@ -106,24 +114,20 @@ DoMini.fn.closest = function (s) {
             } else {
                 el = null;
             }
+            if ( !elements.includes(el) ) {
+                elements.push(el);
+            }
         }
     }
-    return DoMini(el);
+    return DoMini().add(elements);
 };
 
 DoMini.fn.add = function( el ) {
-    let toAdd = [];
-    if ( typeof el == 'string' ) {
-        toAdd = DoMini(el).get();
-    } else if ( el instanceof DoMini ) {
-        toAdd = el.get();
-    } else if ( el instanceof HTMLElement ) {
-        toAdd = [el];
-    } else if ( el instanceof Array ) {
-        toAdd = el;
-    }
-    if ( toAdd.length > 0 ) {
-        this.push(...toAdd);
+    let elements = DoMini._fn.HTMLElementArrayFromAny(el);
+    for (const element of elements) {
+        if ( !Array.from(this).includes(element) ) {
+            this.push(element);
+        }
     }
     return this;
 };
@@ -136,7 +140,7 @@ DoMini.fn.find = function (s) {
             found = found.concat( Array.from(el.querySelectorAll(s)) );
         });
         if ( found.length > 0 ) {
-            newDomini.push(...found);
+            newDomini.add(found);
         }
     }
 

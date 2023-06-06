@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
       'dist/domini.js',
       'test/fixture.js',
-      'test/*.js'
+      'test/**/*.js'
       //'test/*.html'
     ],
 

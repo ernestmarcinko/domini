@@ -29,11 +29,11 @@ QUnit.module("manipulation.js tests", function(hooks) {
 
     QUnit.test('.clone()', function(assert) {  
         let source = $(null);
-        assert.equal(source.clone(), source);
+        assert.deepEqual(source.clone(), source);
 
         assert.deepEqual($(null).clone(), $(null));
         assert.deepEqual($({}).clone(), $(null));
-        assert.deepEqual($([][0]).clone(), $(null));
+        assert.deepEqual($(undefined).clone(), $(null));
 
         assert.equal(
             $('#title').clone().get(0).outerHTML,
@@ -43,6 +43,14 @@ QUnit.module("manipulation.js tests", function(hooks) {
             $('#title').clone().get(0),
             $('#title').get(0)
         );
+
+        // 3 clones
+        const listClones = $('#list-container li').clone();
+        assert.equal(listClones.length, 3, "3 li cloned");
+
+        // First two only
+        const listClones2 = $('#list-container li:nth-child(-n+2)').clone();
+        assert.equal(listClones2.length, 2, "2 li cloned");
     });
 
     QUnit.test('.remove()', function(assert) {
@@ -78,7 +86,7 @@ QUnit.module("manipulation.js tests", function(hooks) {
         assert.expect(13);
 
         assert.equal($(null).detach().length, 0, 'null detach');
-        assert.equal($([][0]).detach().length, 0, 'undefined detach');
+        assert.equal($(undefined).detach().length, 0, 'undefined detach');
         
         const element = document.getElementById("list-item-2-2");
         const childDetached = $('#list-container-two').detach(".list-item");

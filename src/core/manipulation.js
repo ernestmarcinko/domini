@@ -25,7 +25,7 @@ DoMini.fn.detach = function(elem) {
             removed.push(el.parentElement.removeChild(el));
         }
     }
-    return DoMini(null).add(removed);
+    return DoMini().add(removed);
 };
 
 /**
