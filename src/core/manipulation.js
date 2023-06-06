@@ -1,21 +1,18 @@
 import DoMini from "../base";
 
 DoMini.fn.clear = function() {
-    this.forEach((el)=>{
+    for ( const el of this ) {
         delete el._domini_events;
-    });
+    }
     return this;
 };
 
 DoMini.fn.clone = function() {
-    let el = this.get(0);
-    if ( el != null ) {
-        this.splice(0, this.length);
-        this.push(el.cloneNode(true));
-    } else {
-        this.splice(0, this.length);
+    let clones = [];
+    for (const el of this) {
+        clones.push(el.cloneNode(true));
     }
-    return this;
+    return DoMini().add(clones);
 };
 
 DoMini.fn.detach = function(elem) {
@@ -23,11 +20,11 @@ DoMini.fn.detach = function(elem) {
     if ( typeof elem != "undefined" ) {
         context = this.find(elem);
     }
-    context.forEach(function(el) {
+    for ( const el of context ) {
         if ( el.parentElement != null ) {
             removed.push(el.parentElement.removeChild(el));
         }
-    });
+    }
     return DoMini(null).add(removed);
 };
 
@@ -40,27 +37,24 @@ DoMini.fn.remove = function(selector) {
 
 DoMini.fn.prepend = function(prepend) {
     prepend = DoMini._fn.HTMLElementArrayFromAny(prepend);
-
     if ( prepend.length > 0 ) {
-        this.forEach(function(el){
-            prepend.forEach(function(pre){
+        for ( const el of this ) {
+            for ( const pre of prepend ) {
                 el.insertBefore(pre, el.children[0]);
-            });
-        });
+            }
+        }
     }
-
     return this;
 };
 
 DoMini.fn.append = function(append) {
     append = DoMini._fn.HTMLElementArrayFromAny(append);
-    
     if ( append.length > 0 ) {
-        this.forEach(function(el){
-            append.forEach(function(a) {
-                el.appendChild(a);
-            });
-        });
+        for ( const el of this ) {
+            for ( const ap of append ) {
+                el.appendChild(ap);
+            }
+        }
     }
     return this;
 };
