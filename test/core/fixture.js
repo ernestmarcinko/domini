@@ -55,6 +55,19 @@ body {
         <li class="list-itemx">list item two 6</li>
     </ul>
 </div>
+<form action="" method="get" name="testform">
+  <div class="form-example">
+    <label for="name">Enter your name: </label>
+    <input type="text" name="name" id="name" value="My Name" required>
+  </div>
+  <div class="form-example">
+    <label for="email">Enter your email: </label>
+    <input type="email" name="email" id="email" value="test@test.com" required>
+  </div>
+  <div class="form-example">
+    <input type="submit" value="Subscribe!">
+  </div>
+</form>
 <div id="absolute">Text</div>
 <div id="fixed">Text</div>
 `;

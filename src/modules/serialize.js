@@ -10,17 +10,10 @@ DoMini.fn.serialize = function() {
         if (form.elements[i].name === "") {
             continue;
         }
+        console.log(form.elements[i])
         switch (form.elements[i].nodeName) {
             case 'INPUT':
                 switch (form.elements[i].type) {
-                    case 'text':
-                    case 'hidden':
-                    case 'password':
-                    case 'button':
-                    case 'reset':
-                    case 'submit':
-                        q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
-                        break;
                     case 'checkbox':
                     case 'radio':
                         if (form.elements[i].checked) {
@@ -29,6 +22,15 @@ DoMini.fn.serialize = function() {
                         break;
                     case 'file':
                         break;
+                    case 'text':
+                        case 'hidden':
+                        case 'password':
+                        case 'button':
+                        case 'reset':
+                        case 'submit':
+                        default:    
+                            q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
+                            break;
                 }
                 break;
             case 'TEXTAREA':

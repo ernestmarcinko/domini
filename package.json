@@ -5,7 +5,8 @@
     "main": "dist/domini.js",
     "scripts": {
         "build": "webpack --mode=production --node-env=production",
-        "test": "karma start",
+        "test": "nodemon ./test/server.js",
+        "test:karma": "karma start",
         "build:dev": "webpack --mode=development --watch",
         "build:prod": "webpack --mode=production --node-env=production"
     },
@@ -32,10 +33,12 @@
     },
     "homepage": "https://github.com/anag0/domini#readme",
     "devDependencies": {
+        "express": "^4.18.2",
         "karma": "^6.4.2",
         "karma-chrome-launcher": "^3.2.0",
         "karma-firefox-launcher": "^2.1.2",
         "karma-qunit": "^4.1.2",
+        "nodemon": "^2.0.22",
         "qunit": "^2.19.4",
         "webpack": "^5.83.1",
         "webpack-cli": "^4.10.0",
