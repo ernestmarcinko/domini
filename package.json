@@ -31,7 +31,7 @@
     "bugs": {
         "url": "https://github.com/anag0/domini/issues"
     },
-    "homepage": "https://github.com/anag0/domini#readme",
+    "homepage": "https://dominijs.com",
     "devDependencies": {
         "express": "^4.18.2",
         "karma": "^6.4.2",
