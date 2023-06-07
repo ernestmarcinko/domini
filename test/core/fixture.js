@@ -63,6 +63,51 @@ body {
   <div class="form-example">
     <label for="email">Enter your email: </label>
     <input type="email" name="email" id="email" value="test@test.com" required>
+
+    <input type="hidden" name="hiddenbox" value="Hidden value!" required>
+    <input type="password" name="pass" value="password123">
+  </div>
+  <div class="form-example">
+    <label>
+        <input type="checkbox" name="single_box_checked" checked=checked>
+    </label>
+    <label>
+        <input type="checkbox" name="single_box_unchecked">
+    </label>
+  </div>
+  <div class="form-example">
+        <select name="single_select">
+            <option value="value 1">Value 1</option>
+            <option value="value 2">Value 2</option>
+            <option value="value 3">Value 3</option>
+            <option value="value 4" selected=selected>Value 4</option>
+            <option value="value 5">Value 5</option>
+        </select>
+  </div>
+  <div class="form-example">
+        <select name="multi_select" multiple>
+            <option value="value 1" selected=selected>Value 1</option>
+            <option value="value 2" selected=selected>Value 2</option>
+            <option value="value 3">Value 3</option>
+            <option value="value 4" selected=selected>Value 4</option>
+            <option value="value 5">Value 5</option>
+        </select>
+  </div>
+  <div class="form-example">
+    <label><input type="checkbox" name="multibox[checkbox1][]" checked=checked></label>
+    <label><input type="checkbox" name="multibox[checkbox2][]" checked=checked></label>
+    <label><input type="checkbox" name="multibox[checkbox3][]"></label>
+    <label><input type="checkbox" name="multibox[checkbox4][]" checked=checked></label>
+  </div>
+  <div class="form-example">
+    <label><input type="radio" name="radiobox[radio1][]"></label>
+    <label><input type="radio" name="radiobox[radio2][]" checked=checked></label>
+    <label><input type="radio" name="radiobox[radio3][]"></label>
+    <label><input type="radio" name="radiobox[radio4][]"></label>
+  </div>
+  <div class="form-example">
+    <textarea name="textareabox">This is the textarea
+    content!</textarea>
   </div>
   <div class="form-example">
     <input type="submit" value="Subscribe!">

@@ -3,7 +3,7 @@ import DoMini from "../base";
 DoMini.fn.serialize = function() {
     let form = this.get(0);
     if ( !form || form.nodeName !== "FORM" ) {
-        return;
+        return '';
     }
     let i, j, q = [];
     for (i = form.elements.length - 1; i >= 0; i = i - 1) {
