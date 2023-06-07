@@ -1,4 +1,4 @@
-QUnit.module("xhttp.js tests", function(hooks) {
+QUnit.module("module: xhttp.js tests", function(hooks) {
     var $ = DoMini;
     hooks.beforeEach(function() {
         var f = document.getElementById('qunit-fixture');

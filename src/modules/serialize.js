@@ -10,7 +10,6 @@ DoMini.fn.serialize = function() {
         if (form.elements[i].name === "") {
             continue;
         }
-        console.log(form.elements[i])
         switch (form.elements[i].nodeName) {
             case 'INPUT':
                 switch (form.elements[i].type) {

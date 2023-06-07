@@ -24,6 +24,8 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
+      'test/server.js',
+      'test/modules/xhttp.js'
     ],
 
 
