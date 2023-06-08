@@ -36,7 +36,7 @@ DoMini.fn.remove = function(selector) {
 };
 
 DoMini.fn.prepend = function(prepend) {
-    prepend = DoMini._fn.HTMLElementArrayFromAny(prepend);
+    prepend = DoMini._fn.ElementArrayFromAny(prepend);
     if ( prepend.length > 0 ) {
         for ( const el of this ) {
             for ( const pre of prepend ) {
@@ -48,7 +48,7 @@ DoMini.fn.prepend = function(prepend) {
 };
 
 DoMini.fn.append = function(append) {
-    append = DoMini._fn.HTMLElementArrayFromAny(append);
+    append = DoMini._fn.ElementArrayFromAny(append);
     if ( append.length > 0 ) {
         for ( const el of this ) {
             for ( const ap of append ) {

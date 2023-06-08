@@ -78,19 +78,19 @@ DoMini._fn.createElementsFromHTML = function(htmlString) {
 /**
  * Converts any argument to HTML elements array
  * 
- * @param {String|DoMini|HTMLElement|Array} any 
- * @returns {Array<HTMLElement>}
+ * @param {String|DoMini|Element|Array} any 
+ * @returns {Array<Element>}
  */
-DoMini._fn.HTMLElementArrayFromAny = function(any) {
+DoMini._fn.ElementArrayFromAny = function(any) {
     if ( typeof any == 'string' ) {
         any = DoMini(any).get();
     } else if ( any instanceof DoMini ) {
         any = any.get();
-    } else if ( any instanceof HTMLElement ) {
+    } else if ( any instanceof Element ) {
         any = [any];
     } else if ( any instanceof Array ) {
         any = any.filter((el)=>{
-            return el instanceof HTMLElement;
+            return el instanceof Element;
         });
     } else {
         return [];

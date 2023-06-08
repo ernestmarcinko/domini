@@ -109,7 +109,7 @@ DoMini.fn.closest = function (s) {
             }
         } else {
             s = s instanceof DoMini ? s.get(0) : s;
-            if ( s instanceof HTMLElement ) {
+            if ( s instanceof Element ) {
                 while ((el = el.parentElement) && el !== s) ;
             } else {
                 el = null;
@@ -123,7 +123,7 @@ DoMini.fn.closest = function (s) {
 };
 
 DoMini.fn.add = function( el ) {
-    let elements = DoMini._fn.HTMLElementArrayFromAny(el);
+    let elements = DoMini._fn.ElementArrayFromAny(el);
     for (const element of elements) {
         if ( !Array.from(this).includes(element) ) {
             this.push(element);
