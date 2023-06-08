@@ -8,14 +8,14 @@
  * Licensed under MIT license.
  *
  */
-
 import DoMini from "../base";
 
 DoMini.fn.unhighlight = function (options) {
+    const $ = DoMini;
     let settings = {className: 'highlight', element: 'span'};
     $.fn.extend(settings, options);
 
-    return this.find(settings.element + "." + settings.className).each(function () {
+    return this.find(settings.element + "." + settings.className).forEach(function () {
         let parent = this.parentNode;
         parent.replaceChild(this.firstChild, this);
         parent.normalize();
@@ -23,14 +23,19 @@ DoMini.fn.unhighlight = function (options) {
 };
 
 DoMini.fn.highlight = function (words, options) {
-    let settings = {
+    this.defaults = {
         className: 'highlight',
         element: 'span',
         caseSensitive: false,
         wordsOnly: false,
-        excludeParents: ''
+        excludeParents: '.excludeFromHighlight'
     };
-    $.fn.extend(settings, options);
+
+    const $ = DoMini;
+    const settings = {
+        ...this.defaults,
+        ...options
+    };
 
     if (words.constructor === String) {
         words = [words];
@@ -53,24 +58,26 @@ DoMini.fn.highlight = function (words, options) {
     }
     let re = new RegExp(pattern, flag);
     function highlight(node, re, nodeName, className, excludeParents) {
-        excludeParents = excludeParents == '' ? '.exhghttt' : excludeParents;
+        excludeParents = excludeParents == '' ? $.fn.highlight.defaults : excludeParents;
         if (node.nodeType === 3) {
-            let normalized = node.data.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            let match = normalized.match(re);
-            if (match) {
-                let highlight = document.createElement(nodeName || 'span');
-                let index;
-                highlight.className = className || 'highlight';
-                if (/\.|,|\s/.test(match[0].charAt(0)))
-                    index = match.index + 1;
-                else
-                    index = match.index;
-                let wordNode = node.splitText(index);
-                wordNode.splitText(match[1].length);
-                let wordClone = wordNode.cloneNode(true);
-                highlight.appendChild(wordClone);
-                wordNode.parentNode.replaceChild(highlight, wordNode);
-                return 1; //skip added node in parent
+            if ( !$(node.parentNode).is(excludeParents) ) {
+                let normalized = node.data.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                let match = normalized.match(re);
+                if (match) {
+                    let highlight = document.createElement(nodeName || 'span');
+                    let index;
+                    highlight.className = className || 'highlight';
+                    if (/\.|,|\s/.test(match[0].charAt(0)))
+                        index = match.index + 1;
+                    else
+                        index = match.index;
+                    let wordNode = node.splitText(index);
+                    wordNode.splitText(match[1].length);
+                    let wordClone = wordNode.cloneNode(true);
+                    highlight.appendChild(wordClone);
+                    wordNode.parentNode.replaceChild(highlight, wordNode);
+                    return 1; //skip added node in parent
+                }
             }
         } else if ((node.nodeType === 1 && node.childNodes) && // only element nodes that have children
             !/(script|style)/i.test(node.tagName) && // ignore script and style nodes
@@ -83,7 +90,7 @@ DoMini.fn.highlight = function (words, options) {
         return 0;
     }
 
-    return this.each(function (el) {
+    return this.forEach(function (el) {
         highlight(el, re, settings.element, settings.className, settings.excludeParents);
     });
 };

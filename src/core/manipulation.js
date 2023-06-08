@@ -1,82 +1,61 @@
 import DoMini from "../base";
 
+DoMini.fn.clear = function() {
+    for ( const el of this ) {
+        delete el._domini_events;
+    }
+    return this;
+};
+
 DoMini.fn.clone = function() {
-    let el = this.get(0);
-    if ( el != null ) {
-        this.a = [el.cloneNode(true)];
-        this.length = this.a.length;
-    } else {
-        this.a = [];
+    let clones = [];
+    for (const el of this) {
+        clones.push(el.cloneNode(true));
     }
-    this.length = this.a.length;
-    return this;
+    return DoMini().add(clones);
 };
 
-DoMini.fn.remove = function(elem) {
+DoMini.fn.detach = function(elem) {
+    let context = this, removed = [];
     if ( typeof elem != "undefined" ) {
-        return elem.parentElement.removeChild(elem);
-    } else {
-        this.forEach(function(el) {
-            if ( el.parentElement != null ) {
-                return el.parentElement.removeChild(el);
-            }
-        });
-        this.a = [];
-        this.length = this.a.length;
-        return null;
+        context = this.find(elem);
     }
+    for ( const el of context ) {
+        if ( el.parentElement != null ) {
+            removed.push(el.parentElement.removeChild(el));
+        }
+    }
+    return DoMini().add(removed);
 };
 
-DoMini.fn.detach = function() {
-    let _this = this, n = [];
-    this.forEach(function(elem){
-        let el = _this.remove(elem);
-        if ( el != null ) {
-            n.push(el)
-        }
-    });
-    this.a = n;
-    this.length = this.a.length;
-    return this;
+/**
+ * Same as .detach() but this also removes all DoMini related stuff
+ */
+DoMini.fn.remove = function(selector) {
+    return this.detach(selector).off().clear();
 };
 
 DoMini.fn.prepend = function(prepend) {
-    if ( typeof prepend == 'string' ) {
-        prepend = DoMini._fn.createElementsFromHTML(prepend);
-    }
-    prepend = Array.isArray(prepend) ? prepend : [prepend];
-    this.forEach(function(el){
-        prepend.forEach(function(pre){
-            if ( typeof pre.is_dom != 'undefined' ) {
-                pre.forEach(function(pr){
-                    el.insertBefore(pr, el.children[0]);
-                });
-            } else {
+    prepend = DoMini._fn.ElementArrayFromAny(prepend);
+    if ( prepend.length > 0 ) {
+        for ( const el of this ) {
+            for ( const pre of prepend ) {
                 el.insertBefore(pre, el.children[0]);
             }
-        });
-    });
+        }
+    }
     return this;
 };
 
 DoMini.fn.append = function(append) {
-    if ( typeof append == 'string' ) {
-        append = DoMini._fn.createElementsFromHTML(append);
-    }
-    append = Array.isArray(append) ? append : [append];
-    this.forEach(function(el){
-        append.forEach(function(app) {
-            if ( app != null ) {
-                if (typeof app.is_dom != 'undefined') {
-                    app.forEach(function (ap) {
-                        el.appendChild(ap);
-                    });
-                } else {
-                    el.appendChild(app.cloneNode(true));
-                }
+    append = DoMini._fn.ElementArrayFromAny(append);
+    if ( append.length > 0 ) {
+        for ( const el of this ) {
+            for ( const ap of append ) {
+                el.appendChild(ap);
             }
-        });
-    });
+        }
+    }
     return this;
 };
 

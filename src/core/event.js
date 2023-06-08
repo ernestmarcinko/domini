@@ -4,7 +4,7 @@ DoMini.fn.on = function() {
     let args = arguments,
         func = function(args, e) {
             let $el;
-            if ( e.type == 'mouseenter' || e.type == 'mouseleave' || e.type == 'hover' ) {
+            if ( e.type == 'mouseenter' || e.type == 'mouseleave' || e.type == 'mouseover' ) {
                 let el = document.elementFromPoint(e.clientX, e.clientY);
                 if ( !el.matches(args[1]) ) {
                     // noinspection StatementWithEmptyBodyJS
@@ -39,8 +39,8 @@ DoMini.fn.on = function() {
                     let f = func.bind(el, args);
                     el.addEventListener(type, f, args[3]);
                     // Store the trigger in the selected elements, not the parent node
-                    el._el = typeof el._el == "undefined" ? [] : el._el;
-                    el._el.push({
+                    el._domini_events = typeof el._domini_events == "undefined" ? [] : el._domini_events;
+                    el._domini_events.push({
                         'type': type,
                         'selector': args[1],
                         'func': f,  // The bound function called by the event listener
@@ -55,8 +55,8 @@ DoMini.fn.on = function() {
                 this.forEach(function (el) {
                     if ( !DoMini._fn.hasEventListener(el, type, args[1]) ) {
                         el.addEventListener(type, args[1], args[2]);
-                        el._el = typeof el._el == "undefined" ? [] : el._el;
-                        el._el.push({
+                        el._domini_events = typeof el._domini_events == "undefined" ? [] : el._domini_events;
+                        el._domini_events.push({
                             'type': type,
                             'func': args[1],
                             'trigger': args[1],
@@ -72,32 +72,31 @@ DoMini.fn.on = function() {
 
 DoMini.fn.off = function(listen, callback) {
     this.forEach(function (el) {
-        if ( typeof el._el != "undefined" && el._el.length > 0 ) {
+        if ( typeof el._domini_events != "undefined" && el._domini_events.length > 0 ) {
             if ( typeof listen === 'undefined' ) {
                 let cb;
-                while (cb = el._el.pop()) {
+                while (cb = el._domini_events.pop()) {
                     el.removeEventListener(cb.type, cb.func, cb.args);
                 }
-                el._el = [];
+                el._domini_events = [];
             } else {
                 listen.split(' ').forEach(function(type){
-                    if (typeof callback == "undefined") {
-                        let cb;
-                        while (cb = el._el.pop()) {
+                    let cb;
+                    let remains = [];
+                    while (cb = el._domini_events.pop()) {
+                        if ( 
+                            cb.type == type &&
+                            ( 
+                                typeof callback == "undefined" ||
+                                cb.trigger == callback
+                            )
+                        ) {
                             el.removeEventListener(type, cb.func, cb.args);
+                        } else {
+                            remains.push(cb);
                         }
-                        el._el = [];
-                    } else {
-                        let remains = [];
-                        el._el.forEach(function(cb){
-                            if ( cb.type == type && cb.trigger == callback ) {
-                                el.removeEventListener(type, cb.func, cb.args);
-                            } else {
-                                remains.push(cb);
-                            }
-                        });
-                        el._el = remains;
                     }
+                    el._domini_events = remains;
                 });
             }
         }
@@ -110,7 +109,7 @@ DoMini.fn.offForced = function(){
     this.forEach(function(el, i){
         let ne = el.cloneNode(true);
         el.parentNode.replaceChild(ne, el);
-        _this.a[i] = ne;
+        _this[i] = ne;
     });
     return this;
 };
@@ -139,9 +138,9 @@ DoMini.fn.trigger = function(type, args, native ,jquery) {
             el.dispatchEvent(event);
         }
 
-        if (typeof el._el != "undefined") {
+        if (typeof el._domini_events != "undefined") {
             // Case 1, regularly attached
-            el._el.forEach(function(data){
+            el._domini_events.forEach(function(data){
                 if ( data.type == type ) {
                     let event = new Event(type);
                     data.trigger.apply(el, [event].concat(args));
@@ -156,8 +155,8 @@ DoMini.fn.trigger = function(type, args, native ,jquery) {
                 if ( p == null ) {
                     break;
                 }
-                if (typeof p._el != "undefined") {
-                    p._el.forEach(function(data){
+                if (typeof p._domini_events != "undefined") {
+                    p._domini_events.forEach(function(data){
                         if ( typeof data.selector !== "undefined" ) {
                             let targets = DoMini(p).find(data.selector);
                             if (

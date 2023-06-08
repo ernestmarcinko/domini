@@ -43,11 +43,11 @@ DoMini._fn.hasFixedParent = function(el) {
 };
 
 DoMini._fn.hasEventListener = function(el, type, trigger) {
-    if (typeof el._el == "undefined") {
+    if (typeof el._domini_events == "undefined") {
         return false;
     }
-    for (let i = 0; i < el._el.length; i++) {
-        if ( el._el[i].trigger == trigger && el._el[i].type == type ) {
+    for (let i = 0; i < el._domini_events.length; i++) {
+        if ( el._domini_events[i].trigger == trigger && el._domini_events[i].type == type ) {
             return true;
         }
     }
@@ -73,6 +73,29 @@ DoMini._fn.createElementsFromHTML = function(htmlString) {
     let template = document.createElement('template');
     template.innerHTML = htmlString.replace(/(\r\n|\n|\r)/gm, "");
     return [...template.content.childNodes];
+};
+
+/**
+ * Converts any argument to HTML elements array
+ * 
+ * @param {String|DoMini|Element|Array} any 
+ * @returns {Array<Element>}
+ */
+DoMini._fn.ElementArrayFromAny = function(any) {
+    if ( typeof any == 'string' ) {
+        any = DoMini(any).get();
+    } else if ( any instanceof DoMini ) {
+        any = any.get();
+    } else if ( any instanceof Element ) {
+        any = [any];
+    } else if ( any instanceof Array ) {
+        any = any.filter((el)=>{
+            return el instanceof Element;
+        });
+    } else {
+        return [];
+    }
+    return any;
 };
 
 DoMini._fn.absolutePosition = function(el) {

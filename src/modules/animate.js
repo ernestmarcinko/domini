@@ -1,25 +1,12 @@
 import DoMini from "../base";
 
-DoMini.fn._animate = {
-    "easing": {
-        "linear": function(x) { return x; },
-        "easeInOutQuad": function(x) {
-            return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
-        },
-        "easeOutQuad": function(x) {
-            return 1 - (1 - x) * (1 - x);
-        }
-    }
-};
-
 DoMini.fn.animate = function(props, duration, easing) {
-    let _this = this;
     duration = duration || 200;
-    easing = easing || "linear";
-    this.forEach(function(el){
+    easing = easing || "easeInOutQuad";
+    for (const el of this) {
         let frames, currentFrame = 0, fps = 60, multiplier, origProps = {}, propsDiff = {},
             handlers, handler, easingFn;
-        handlers = _this.prop('_dom_animations');
+        handlers = this.prop('_domini_animations');
         handlers = handlers == null ? [] : handlers;
 
         if ( props === false ) {
@@ -28,11 +15,7 @@ DoMini.fn.animate = function(props, duration, easing) {
                 clearInterval(handler);
             });
         } else {
-            if ( typeof _this._animate.easing[easing] != "undefined" ) {
-                easingFn = _this._animate.easing[easing];
-            } else {
-                easingFn = _this._animate.easing.easeInOutQuad;
-            }
+            easingFn = DoMini.fn.animate.easing[easing] ?? DoMini.fn.animate.easing.easeInOutQuad;
             Object.keys(props).forEach(function(prop){
                 if ( prop.indexOf('scroll') > -1 ) {
                     origProps[prop] = el[prop];
@@ -64,10 +47,20 @@ DoMini.fn.animate = function(props, duration, easing) {
 
             handler = setInterval(move, 1000 / fps);
             handlers.push(handler);
-            _this.prop('_dom_animations', handlers);
+            this.prop('_domini_animations', handlers);
         }
-    });
+    }
     return this;
+};
+
+DoMini.fn.animate.easing = {
+    "linear": function(x) { return x; },
+    "easeInOutQuad": function(x) {
+        return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+    },
+    "easeOutQuad": function(x) {
+        return 1 - (1 - x) * (1 - x);
+    }
 };
 
 export default DoMini;

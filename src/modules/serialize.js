@@ -3,7 +3,7 @@ import DoMini from "../base";
 DoMini.fn.serialize = function() {
     let form = this.get(0);
     if ( !form || form.nodeName !== "FORM" ) {
-        return;
+        return '';
     }
     let i, j, q = [];
     for (i = form.elements.length - 1; i >= 0; i = i - 1) {
@@ -13,14 +13,6 @@ DoMini.fn.serialize = function() {
         switch (form.elements[i].nodeName) {
             case 'INPUT':
                 switch (form.elements[i].type) {
-                    case 'text':
-                    case 'hidden':
-                    case 'password':
-                    case 'button':
-                    case 'reset':
-                    case 'submit':
-                        q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
-                        break;
                     case 'checkbox':
                     case 'radio':
                         if (form.elements[i].checked) {
@@ -29,6 +21,15 @@ DoMini.fn.serialize = function() {
                         break;
                     case 'file':
                         break;
+                    case 'text':
+                        case 'hidden':
+                        case 'password':
+                        case 'button':
+                        case 'reset':
+                        case 'submit':
+                        default:    
+                            q.push(form.elements[i].name + "=" + encodeURIComponent(form.elements[i].value));
+                            break;
                 }
                 break;
             case 'TEXTAREA':

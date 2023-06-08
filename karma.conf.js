@@ -17,13 +17,15 @@ module.exports = function(config) {
     files: [
       'dist/domini.js',
       'test/fixture.js',
-      'test/*.js'
+      'test/**/*.js'
       //'test/*.html'
     ],
 
 
     // list of files / patterns to exclude
     exclude: [
+      'test/server.js',
+      'test/modules/xhttp.js'
     ],
 
 
@@ -58,7 +60,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://www.npmjs.com/search?q=keywords:karma-launcher
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadless', "Firefox"],
 
 
     // Continuous Integration mode

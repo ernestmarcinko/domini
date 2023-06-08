@@ -1,35 +1,33 @@
 import DoMini from "../base";
 
 DoMini.fn.is = function(s){
-    let el = this.get(0);
-    if ( el != null ) {
-        return el.matches(s);
+    let is = false;
+    for ( const el of this ) {
+        if ( el.matches(s) ) {
+            is = true;
+            break;
+        }
     }
-    return false;
+    return is;
 };
 
 DoMini.fn.parent = function (s) {
-    let el = this.get(0);
-    let _this = this.copy(this, true);
-    _this.a = [];
-    if (el != null) {
-        el = el.parentElement;
-        if (typeof s != 'undefined') {
-            if (el.matches(s)) {
-                _this.a = [el];
+    let elements = [];
+    for ( const el of this ) {
+        let parent = el.parentElement;
+        if ( typeof s == 'string' ) {
+            if ( parent != null && !parent.matches(s) ) {
+                parent = null;
             }
-        } else {
-            _this.a = el == null ? [] : [el];
         }
-        return _this;
+        elements.push(parent);
     }
-    return _this;
+    return DoMini().add(elements);
 };
 
 DoMini.fn.copy = function(source, deep) {
     let o, prop, type;
     if (typeof source != 'object' || source === null) {
-        // What do to with functions, throw an error?
         o = source;
         return o;
     }
@@ -48,116 +46,105 @@ DoMini.fn.copy = function(source, deep) {
 };
 
 DoMini.fn.first = function () {
-    let _this = this.copy(this, true);
-    _this.a = typeof _this.a[0] != 'undefined' ? [_this.a[0]] : [];
-    _this.length = _this.a.length;
-    return _this;
+    return DoMini(this[0]);
 };
 
 DoMini.fn.last = function () {
-    let _this = this.copy(this, true);
-    _this.a = _this.a.length > 0 ? [_this.a[_this.a.length - 1]] : [];
-    _this.length = _this.a.length;
-    return _this;
+    return DoMini(this[this.length-1]);
 };
 
 DoMini.fn.prev = function (s) {
-    let _this = this.copy(this, true);
-    if ( typeof s == "undefined" ) {
-        _this.a = typeof _this.a[0] != 'undefined' && _this.a[0].previousElementSibling != null ?
-            [_this.a[0].previousElementSibling] : [];
-    } else {
-        if ( typeof _this.a[0] != 'undefined' ) {
-            let n = _this.a[0].previousElementSibling;
-            _this.a = [];
-            while ( n != null ) {
-                if ( n.matches(s) ) {
-                    _this.a = [n];
+    let elements = [];
+    
+    for ( const el of this ) {
+        let prev;
+        if ( typeof s == "string" ) {
+            prev = el.previousElementSibling;
+            while ( prev != null ) {
+                if ( prev.matches(s) ) {
+                    elements.push(prev);
                     break;
                 }
-                n = n.previousElementSibling;
+                prev = prev.previousElementSibling;
             }
+        } else {
+            elements.push(el.previousElementSibling);
         }
     }
-    _this.length = _this.a.length;
-    return _this;
+
+    return DoMini(null).add(elements);
 };
 
 DoMini.fn.next = function (s) {
-    let _this = this.copy(this, true);
-    if ( typeof s == "undefined" ) {
-        _this.a = typeof _this.a[0] != 'undefined' && _this.a[0].nextElementSibling != null ?
-            [_this.a[0].nextElementSibling] : [];
-    } else {
-        if ( typeof _this.a[0] != 'undefined' ) {
-            let n = _this.a[0].nextElementSibling;
-            _this.a = [];
-            while ( n != null ) {
-                if ( n.matches(s) ) {
-                    _this.a = [n];
+    let elements = [];
+
+    for ( const el of this ) {
+        let next;
+        if ( typeof s == "string" ) {
+            next = el.nextElementSibling;
+            while ( next != null ) {
+                if ( next.matches(s) ) {
+                    if ( !elements.includes(next) ) {
+                        elements.push(next);
+                    }
                     break;
                 }
-                n = n.nextElementSibling;
+                next = next.nextElementSibling;
             }
+        } else {
+            elements.push(el.nextElementSibling);
         }
     }
-    _this.length = _this.a.length;
-    return _this;
+    
+    return DoMini(null).add(elements);
 };
 
 DoMini.fn.closest = function (s) {
-    let el = this.get(0);
-    let _this = this.copy(this, true);
-    _this.a = [];
-    if ( typeof s === "string" ) {
-        if (el !== null && typeof el.matches != 'undefined' && s !== '') {
-            if (!el.matches(s)) {
-                // noinspection StatementWithEmptyBodyJS
-                while ((el = el.parentElement) && !el.matches(s)) ;
+    let elements = [];
+    for ( let el of this ) {
+        if ( typeof s === "string" && s !== '' ) {
+            while ((el = el.parentElement) && !el.matches(s)) ;
+            if ( !elements.includes(el) ) {
+                elements.push(el);
             }
-            _this.a = el == null ? [] : [el];
-        }
-    } else {
-        if (el !== null && typeof el.matches != 'undefined' && typeof s.matches != 'undefined') {
-            if ( el !== s ) {
-                // noinspection StatementWithEmptyBodyJS
+        } else {
+            s = s instanceof DoMini ? s.get(0) : s;
+            if ( s instanceof Element ) {
                 while ((el = el.parentElement) && el !== s) ;
+            } else {
+                el = null;
             }
-            _this.a = el == null ? [] : [el];
+            if ( !elements.includes(el) ) {
+                elements.push(el);
+            }
         }
     }
-    _this.length = _this.a.length;
-    return _this;
+    return DoMini().add(elements);
 };
 
 DoMini.fn.add = function( el ) {
-    if ( typeof el !== "undefined" ) {
-        if (typeof el.nodeType !== "undefined") {
-            if (this.a.indexOf(el) == -1) {
-                this.a.push(el);
-            }
-        } else if (typeof el.a !== "undefined") {
-            let _this = this;
-            el.a.forEach(function (el) {
-                if (_this.a.indexOf(el) == -1) {
-                    _this.a.push(el);
-                }
-            });
+    let elements = DoMini._fn.ElementArrayFromAny(el);
+    for (const element of elements) {
+        if ( !Array.from(this).includes(element) ) {
+            this.push(element);
         }
     }
     return this;
 };
 
 DoMini.fn.find = function (s) {
-    let _this = this.copy(this, true);
-    _this.a = [];
-    this.forEach(function(el){
-        if ( el !== null && typeof el.querySelectorAll != 'undefined') {
-            _this.a = _this.a.concat(Array.prototype.slice.call(el.querySelectorAll(s)));
+    const newDomini = new DoMini();
+    if ( typeof s == 'string' ) {
+        let found = [];
+        this.get().forEach(function(el){
+            found = found.concat( Array.from(el.querySelectorAll(s)) );
+        });
+        if ( found.length > 0 ) {
+            newDomini.add(found);
         }
-    });
-    _this.length = _this.a.length;
-    return _this;
+    }
+
+    return newDomini;
 };
 
 export default DoMini;
