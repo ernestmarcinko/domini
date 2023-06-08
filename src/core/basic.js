@@ -21,7 +21,7 @@ DoMini.fn.forEach = function (callback) {
 };
 
 // Reversed index/node parameters like in original jQuery
-DoMini.fn.each = function (c) {
+DoMini.fn.each = function (callback) {
     this.get().forEach(function (node, index, array) {
         callback.apply(node, [index, node, array]);
     });
