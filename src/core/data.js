@@ -1,9 +1,9 @@
 import DoMini from "../base";
 
 DoMini.fn.val = function(v) {
-    let el = this.get(0);
-    if ( el != null ) {
-        if (arguments.length == 1) {
+    let ret;
+    if ( arguments.length == 1 ) {
+        for ( const el of this ) {
             if ( el.type == 'select-multiple' ) {
                 v = typeof v === 'string' ? v.split(',') : v;
                 for ( let i = 0, l = el.options.length, o; i < l; i++ ) {
@@ -13,23 +13,27 @@ DoMini.fn.val = function(v) {
             } else {
                 el.value = v;
             }
-        } else {
+        }
+        ret = this;
+    } else {
+        let el = this.get(0);
+        if ( el != null ) {
             if ( el.type == 'select-multiple' ) {
-                return Array.prototype.map.call(el.selectedOptions, function(x){ return x.value });
+                ret = Array.prototype.map.call(el.selectedOptions, function(x){ return x.value });
             } else {
-                return el.value;
+                ret = el.value;
             }
         }
     }
-    return this;
+    return ret;
 };
 
 DoMini.fn.attr = function (a, v) {
-    let ret, args = arguments, _this = this;
-    this.forEach(function(el) {
-        if ( args.length == 2 ) {
+    let ret;
+    for ( const el of this ) {
+        if ( arguments.length == 2 ) {
             el.setAttribute(a, v);
-            ret = _this;
+            ret = this;
         } else {
             if ( typeof a === 'object' ) {
                 Object.keys(a).forEach(function(k){
@@ -37,29 +41,31 @@ DoMini.fn.attr = function (a, v) {
                 });
             } else {
                 ret = el.getAttribute(a);
+                break;
             }
         }
-    });
+    }
     return ret;
 };
 
 DoMini.fn.removeAttr = function(a) {
-    this.forEach(function(el) {
+    for ( const el of this ) {
         el.removeAttribute(a);
-    });
+    }
     return this;
 };
 
 DoMini.fn.prop = function(a, v) {
-    let ret, args = arguments;
-    this.forEach(function(el) {
-        if ( args.length == 2 ) {
+    let ret;
+    for ( const el of this ) {
+        if ( arguments.length == 2 ) {
             el[a] = v;
         } else {
             ret = typeof el[a] != "undefined" ? el[a] : null;
+            break;
         }
-    });
-    if ( args.length == 2 ) {
+    }
+    if ( arguments.length == 2 ) {
         return this;
     } else {
         return ret;
@@ -71,23 +77,23 @@ DoMini.fn.data = function(d, v) {
         return g[1].toUpperCase();
     });
     if ( arguments.length == 2 ) {
-        this.forEach((el) => {
+        for ( const el of this ) {
             if ( el != null ) {
                 el.dataset[s] = v;
             }
-        });
+        }
         return this;
     } else {
         let el = this.get(0);
-        return el != null & typeof el.dataset[s] == "undefined" ? '' : el.dataset[s];
+        return el != null && typeof el.dataset[s] != "undefined" ? el.dataset[s] : '';
     }
 };
 
 DoMini.fn.html = function(v) {
     if ( arguments.length == 1 ) {
-        this.forEach((el)=>{
+        for ( const el of this ) {
             el.innerHTML = v;   
-        });
+        }
         return this;
     } else {
         let el = this.get(0);
@@ -97,9 +103,9 @@ DoMini.fn.html = function(v) {
 
 DoMini.fn.text = function(v) {
     if ( arguments.length == 1 ) {
-        this.forEach((el)=>{
+        for ( const el of this ) {
             el.textContent = v;   
-        });
+        }
         return this;
     } else {
         let el = this.get(0);

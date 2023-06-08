@@ -15,7 +15,7 @@ DoMini.fn.unhighlight = function (options) {
     let settings = {className: 'highlight', element: 'span'};
     $.fn.extend(settings, options);
 
-    return this.find(settings.element + "." + settings.className).each(function () {
+    return this.find(settings.element + "." + settings.className).forEach(function () {
         let parent = this.parentNode;
         parent.replaceChild(this.firstChild, this);
         parent.normalize();
@@ -90,7 +90,7 @@ DoMini.fn.highlight = function (words, options) {
         return 0;
     }
 
-    return this.each(function (el) {
+    return this.forEach(function (el) {
         highlight(el, re, settings.element, settings.className, settings.excludeParents);
     });
 };

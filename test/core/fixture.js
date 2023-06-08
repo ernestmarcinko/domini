@@ -21,7 +21,7 @@ body {
 }
 </style>
 <h1 id="title">Test Title</h1>
-<div id="node"><p>Test</p></div>
+<div id="node" data-test="value 1"><p>Test</p></div>
 <div id="paragraphs">
     <p>Lorem Ipsum 1</p>
     <p>Lorem Ipsum 2</p>
