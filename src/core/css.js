@@ -1,9 +1,7 @@
 import DoMini from "../base";
 
 DoMini.fn.css = function(prop, v) {
-    let els = this.get(), el;
-    for (let i=0; i<els.length; i++) {
-        el = els[i];
+    for ( const el of this ) {
         if ( arguments.length == 1 ) {
             if ( typeof prop == "object" ) {
                 Object.keys(prop).forEach(function(k){

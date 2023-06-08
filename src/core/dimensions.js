@@ -89,6 +89,15 @@ DoMini.fn.innerWidth = function() {
     return 0;
 };
 
+DoMini.fn.innerHeight = function() {
+    let el = this.get(0);
+    if ( el != null ) {
+        let cs = window.getComputedStyle(el);
+        return this.outerHeight() - parseFloat(cs.borderTopWidth) - parseFloat(cs.borderBottomtWidth);
+    }
+    return 0;
+};
+
 DoMini.fn.width = function() {
     return this.outerWidth();
 };
