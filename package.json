@@ -1,6 +1,6 @@
 {
     "name": "domini",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Minimalistic DOM manipulation tool",
     "main": "dist/domini.js",
     "scripts": {
