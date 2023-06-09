@@ -27,6 +27,20 @@ DoMini(function($){
 });
 ```
 
+Core and optional modules:
+
+```javascript
+import "domini/dist/domini-core";
+import "domini/dist/domini-animate";
+import "domini/dist/domini-highlight";
+import "domini/dist/domini-serialize";
+import "domini/dist/domini-viewport";
+import "domini/dist/domini-xhttp";
+
+DoMini(function($){
+    //.. do your thing
+});
+```
 
 ## Via CDN
 
