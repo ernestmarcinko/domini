@@ -62,7 +62,7 @@ DoMini.fn.serialize = function() {
     }
     return q.join("&");
 };
-DoMini.fn.serializeForAjax = function(obj, prefix) {
+DoMini.fn.serializeObject = function(obj, prefix) {
     let str = [],
         p;
     for (p in obj) {
@@ -70,7 +70,7 @@ DoMini.fn.serializeForAjax = function(obj, prefix) {
             let k = prefix ? prefix + "[" + p + "]" : p,
                 v = obj[p];
             str.push((v !== null && typeof v === "object") ?
-            DoMini.fn.serializeForAjax(v, k) :
+            DoMini.fn.serializeObject(v, k) :
                 encodeURIComponent(k) + "=" + encodeURIComponent(v));
         }
     }
