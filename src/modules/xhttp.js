@@ -36,7 +36,7 @@ DoMini.fn.ajax = function(args) {
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if ( args.success != null ) {
-                if ( this.readyState == 4 && this.status == 200 ) {
+                if ( this.readyState == 4 && (this.status >= 200 && this.status < 400) ) {
                     args.success(this.responseText);
                 }
             }
