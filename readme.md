@@ -1,4 +1,4 @@
-# DoMini
+# [DoMini](https://dominijs.com) &middot; ![npm](https://img.shields.io/npm/v/domini) ![npm](https://img.shields.io/npm/dy/domini) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 A minimalistic HTML document manipulation and traversal tool. Syntactically indentical to jQuery, but much smaller with only the essential features.
 

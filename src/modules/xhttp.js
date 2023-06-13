@@ -29,14 +29,14 @@ DoMini.fn.ajax = function(args) {
         args.data.fn = fn;
         let script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = args.url + '?' + this.serializeForAjax(args.data);
+        script.src = args.url + '?' + this.serializeObject(args.data);
         script.onload = function(){this.remove();};
         document.body.appendChild(script);
     } else {
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if ( args.success != null ) {
-                if ( this.readyState == 4 && this.status == 200 ) {
+                if ( this.readyState == 4 && (this.status >= 200 && this.status < 400) ) {
                     args.success(this.responseText);
                 }
             }
@@ -51,7 +51,7 @@ DoMini.fn.ajax = function(args) {
         xhttp.setRequestHeader('Content-type', args.contentType);
         xhttp.setRequestHeader('Accept', args.accept);
 
-        xhttp.send(this.serializeForAjax(args.data));
+        xhttp.send(this.serializeObject(args.data));
         return xhttp;
     }
 };

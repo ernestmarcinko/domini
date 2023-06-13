@@ -1,5 +1,6 @@
 import DoMini from "../base";
 
+// Inspired by: https://github.com/zeusdeux/isInViewport
 DoMini.fn.inViewPort = function (tolerance, viewport) {
     "use strict";
     let element = this.get(0), vw, vh;
