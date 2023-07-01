@@ -117,7 +117,7 @@ DoMini._fn.plugin = function (name, object) {
         if ( typeof(options) != 'undefined' && object[options] ) {
             return object[options].apply( this, Array.prototype.slice.call( arguments, 1 ));
         } else {
-            return this.each(function (elem) {
+            return this.forEach(function (elem) {
                 elem['domini_' + name] = Object.create(object).init(options, elem);
             });
         }
