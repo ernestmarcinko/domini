@@ -9,7 +9,7 @@ QUnit.module("base.js tests", function(hooks) {
         let $title = $('#title'),
             title = document.getElementById('title');
             
-        assert.expect(40);
+        assert.expect(42);
 
         assert.equal(typeof DoMini, 'function', "typeof DoMini = 'function'"); 
         assert.equal(typeof $title, 'object', "typeof $('#title') = 'object'");
@@ -18,6 +18,9 @@ QUnit.module("base.js tests", function(hooks) {
         assert.equal($(null).length, 0, "$(null).length = 0");
         assert.equal($([]).length, 0, "$([]).length = 0");
         assert.equal($(undefined).length, 0, "$(undefined).length = 0");
+
+        assert.equal($(document).length, 1, "$(document).length = 1");
+        assert.equal($(window).length, 1, "$(window).length = 1");
 
 
         assert.true($title instanceof DoMini, "$('#title') instanceof DoMini"); 

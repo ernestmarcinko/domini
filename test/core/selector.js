@@ -260,7 +260,7 @@ QUnit.module("selector.js tests", function(hooks) {
         );
     });
 
-    QUnit.test('.find()', function(assert) {
+    QUnit.test('.find() Element', function(assert) {
         let nativeListLi = document.querySelectorAll("#list-container li");
         assert.true($().find().length == 0, 'on empty');
         assert.true($(null).find().length == 0, 'on null');
@@ -288,5 +288,10 @@ QUnit.module("selector.js tests", function(hooks) {
                 'list items length check' + i
             );
         });
+    });
+
+    QUnit.test('.find() Window', function(assert) {
+        assert.equal($(window).find("div").length, 0, 'window does not have querySelector');
+        assert.equal($(window).find("li").length, 0, 'window does not have querySelector');
     });
 });

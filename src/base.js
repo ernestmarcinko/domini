@@ -40,7 +40,7 @@ if ( typeof window.DoMini == 'undefined' ) {
             if ( typeof node != "undefined" ) {
                 if ( node instanceof DoMini ) {
                     return node.find(s);
-                } else if ( node instanceof Element || typeof node == 'string' ) {
+                } else if ( this.isValidNode(node) || typeof node == 'string' ) {
                     return DoMini(node).find(s);
                 }
             } else {
@@ -49,7 +49,7 @@ if ( typeof window.DoMini == 'undefined' ) {
                 } else {
                     if ( s instanceof DoMini ) {
                         return s;
-                    } else if ( s instanceof Element ) {
+                    } else if ( this.isValidNode(s) ) {
                         this.push(s)
                     }
                 }
@@ -69,6 +69,8 @@ if ( typeof window.DoMini == 'undefined' ) {
             }
             return [...document.querySelectorAll(s)];
         },
+
+        isValidNode: (node)=>node instanceof Element || node instanceof Document || node instanceof Window,
 
         // This makes it act more like an array
         push: Array.prototype.push,

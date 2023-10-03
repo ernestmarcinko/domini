@@ -137,7 +137,8 @@ DoMini.fn.find = function (s) {
     if ( typeof s == 'string' ) {
         let found = [];
         this.get().forEach(function(el){
-            found = found.concat( Array.from(el.querySelectorAll(s)) );
+            const matches = el.querySelectorAll?.(s) ?? [];
+            found = found.concat( Array.from(matches) );
         });
         if ( found.length > 0 ) {
             newDomini.add(found);
