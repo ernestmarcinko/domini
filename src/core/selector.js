@@ -103,14 +103,14 @@ DoMini.fn.closest = function (s) {
     let elements = [];
     for ( let el of this ) {
         if ( typeof s === "string" && s !== '' ) {
-            while ((el = el.parentElement) && !el.matches(s)) ;
+            while (!el.matches(s) && (el = el.parentElement)) ;
             if ( !elements.includes(el) ) {
                 elements.push(el);
             }
         } else {
             s = s instanceof DoMini ? s.get(0) : s;
             if ( s instanceof Element ) {
-                while ((el = el.parentElement) && el !== s) ;
+                while (el !== s && (el = el.parentElement)) ;
             } else {
                 el = null;
             }
