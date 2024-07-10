@@ -4,7 +4,7 @@ DoMini.fn.on = function() {
     let args = arguments,
         func = function(args, e) {
             let $el;
-            if ( e.type == 'mouseenter' || e.type == 'mouseleave' || e.type == 'mouseover' ) {
+            if ( e.type === 'mouseenter' || e.type === 'mouseleave' || e.type === 'mouseover' ) {
                 let el = document.elementFromPoint(e.clientX, e.clientY);
                 if ( !el.matches(args[1]) ) {
                     // noinspection StatementWithEmptyBodyJS
@@ -85,10 +85,10 @@ DoMini.fn.off = function(listen, callback) {
                     let remains = [];
                     while (cb = el._domini_events.pop()) {
                         if ( 
-                            cb.type == type &&
+                            cb.type === type &&
                             ( 
                                 typeof callback == "undefined" ||
-                                cb.trigger == callback
+                                cb.trigger === callback
                             )
                         ) {
                             el.removeEventListener(type, cb.func, cb.args);
@@ -141,7 +141,7 @@ DoMini.fn.trigger = function(type, args, native ,jquery) {
         if (typeof el._domini_events != "undefined") {
             // Case 1, regularly attached
             el._domini_events.forEach(function(data){
-                if ( data.type == type ) {
+                if ( data.type === type ) {
                     let event = new Event(type);
                     data.trigger.apply(el, [event].concat(args));
                 }
@@ -162,7 +162,7 @@ DoMini.fn.trigger = function(type, args, native ,jquery) {
                             if (
                                 targets.length > 0 &&
                                 targets.get().indexOf(el) >=0 &&
-                                data.type == type
+                                data.type === type
                             ) {
                                 let event = new Event(type);
                                 data.trigger.apply(el, [event].concat(args));

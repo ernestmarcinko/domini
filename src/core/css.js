@@ -2,7 +2,7 @@ import DoMini from "../base";
 
 DoMini.fn.css = function(prop, v) {
     for ( const el of this ) {
-        if ( arguments.length == 1 ) {
+        if ( arguments.length === 1 ) {
             if ( typeof prop == "object" ) {
                 Object.keys(prop).forEach(function(k){
                     el.style[k] = prop[k];
@@ -67,9 +67,9 @@ DoMini.fn.isVisible = function() {
     while (el !== null) {
         style = window.getComputedStyle(el);
         if (
-            style['display'] == 'none' ||
-            style['visibility'] == 'hidden' ||
-            style['opacity'] == 0
+            style['display'] === 'none' ||
+            style['visibility'] === 'hidden' ||
+            parseInt(style['opacity']) === 0
         ) {
             visible = false;
             break;

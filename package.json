@@ -3,6 +3,7 @@
     "version": "0.2.4",
     "description": "Minimalistic DOM manipulation tool",
     "main": "dist/domini.js",
+    "types": "domini.d.ts",
     "scripts": {
         "build": "webpack --mode=production --node-env=production",
         "test": "nodemon ./test/server.js",
@@ -23,6 +24,8 @@
     ],
     "files": [
         "dist",
+        "types.d.ts",
+        "domini.d.ts",
         "examples.html",
         "readme.md"
     ],

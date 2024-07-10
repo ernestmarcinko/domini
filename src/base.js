@@ -7,10 +7,12 @@
  * @returns {DoMini|void}
  */
 
+let DoMini;
+
 // Prevent overloading
 if ( typeof window.DoMini == 'undefined' ) {
     
-    var DoMini = function(selector, node) {
+    DoMini = function(selector, node) {
         // Actual constructor when new Domini() is called
         if ( typeof arguments[2] !== 'undefined' ) {
             return this.constructor.call(this, selector, node);
@@ -44,7 +46,7 @@ if ( typeof window.DoMini == 'undefined' ) {
                     return DoMini(node).find(s);
                 }
             } else {
-                if (typeof s == "string" && s != '') {
+                if (typeof s == "string" && s !== '') {
                     this.push(...this._(s));
                 } else {
                     if ( s instanceof DoMini ) {
@@ -85,7 +87,7 @@ if ( typeof window.DoMini == 'undefined' ) {
     // Utility functions container
     DoMini._fn = {};
 } else {
-    var DoMini = window.DoMini;
+    DoMini = window.DoMini;
 }
 
 export default DoMini;
