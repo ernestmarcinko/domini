@@ -120,6 +120,7 @@ QUnit.module("selector.js tests", function(hooks) {
         assert.true($(null).prev().length == 0, 'on null');
         assert.true($({}).prev().length == 0, 'on empty object');
         assert.true($(undefined).prev().length == 0, 'on undefined');
+        assert.true($(undefined).prev().prev().prev().length == 0, 'on undefined chained');
 
         // 3 items, 2nd and 3rd have previous neighbors
         assert.equal(

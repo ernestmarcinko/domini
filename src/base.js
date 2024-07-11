@@ -7,10 +7,12 @@
  * @returns {DoMini|void}
  */
 
+let DoMini;
+
 // Prevent overloading
 if ( typeof window.DoMini == 'undefined' ) {
     
-    var DoMini = function(selector, node) {
+    DoMini = function(selector, node) {
         // Actual constructor when new Domini() is called
         if ( typeof arguments[2] !== 'undefined' ) {
             return this.constructor.call(this, selector, node);
@@ -18,7 +20,7 @@ if ( typeof window.DoMini == 'undefined' ) {
 
         //if ( arguments.length >= 1 ) {
             // Case of DoMini(function($){..})
-            if ( arguments.length == 1 && typeof arguments[0] == 'function' ) {
+            if ( arguments.length === 1 && typeof arguments[0] == 'function' ) {
                 if (document.readyState === "complete" || document.readyState === "loaded"  || document.readyState === "interactive") {
                     arguments[0].apply(this, [DoMini]);
                 } else {
@@ -44,7 +46,7 @@ if ( typeof window.DoMini == 'undefined' ) {
                     return DoMini(node).find(s);
                 }
             } else {
-                if (typeof s == "string" && s != '') {
+                if (typeof s == "string" && s !== '') {
                     this.push(...this._(s));
                 } else {
                     if ( s instanceof DoMini ) {
@@ -76,7 +78,7 @@ if ( typeof window.DoMini == 'undefined' ) {
         push: Array.prototype.push,
         pop: Array.prototype.pop,
         sort: Array.prototype.sort,
-        splice: Array.prototype.splice
+        splice: Array.prototype.splice,
     }
 
     // Define the iterator symbol to the array iterator, allows "for of.." and derivates
@@ -84,8 +86,10 @@ if ( typeof window.DoMini == 'undefined' ) {
 
     // Utility functions container
     DoMini._fn = {};
+
+    DoMini.version = "0.2.5";
 } else {
-    var DoMini = window.DoMini;
+    DoMini = window.DoMini;
 }
 
 export default DoMini;

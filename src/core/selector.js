@@ -123,7 +123,7 @@ DoMini.fn.closest = function (s) {
 };
 
 DoMini.fn.add = function( el ) {
-    let elements = DoMini._fn.ElementArrayFromAny(el);
+    let elements = DoMini._fn.elementArrayFromAny(el);
     for (const element of elements) {
         if ( !Array.from(this).includes(element) ) {
             this.push(element);

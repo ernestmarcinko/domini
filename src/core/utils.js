@@ -6,10 +6,10 @@ DoMini._fn.bodyTransform = function() {
         let style = window.getComputedStyle(document.body);
         if ( typeof style.transform != 'undefined' ) {
             let matrix = new WebKitCSSMatrix(style.transform);
-            if ( matrix.m41 != 'undefined' ) {
+            if ( matrix.m41 !== 'undefined' ) {
                 x = matrix.m41;
             }
-            if ( matrix.m42 != 'undefined' ) {
+            if ( matrix.m42 !== 'undefined' ) {
                 y = matrix.m42;
             }
         }
@@ -47,7 +47,7 @@ DoMini._fn.hasEventListener = function(el, type, trigger) {
         return false;
     }
     for (let i = 0; i < el._domini_events.length; i++) {
-        if ( el._domini_events[i].trigger == trigger && el._domini_events[i].type == type ) {
+        if ( el._domini_events[i].trigger === trigger && el._domini_events[i].type === type ) {
             return true;
         }
     }
@@ -81,7 +81,7 @@ DoMini._fn.createElementsFromHTML = function(htmlString) {
  * @param {String|DoMini|Element|Array} any 
  * @returns {Array<Element>}
  */
-DoMini._fn.ElementArrayFromAny = function(any) {
+DoMini._fn.elementArrayFromAny = function(any) {
     if ( typeof any == 'string' ) {
         any = DoMini(any).get();
     } else if ( any instanceof DoMini ) {
@@ -97,6 +97,11 @@ DoMini._fn.ElementArrayFromAny = function(any) {
     }
     return any;
 };
+
+/**
+ * Backwards compatibility because of typo in 0.2.4
+ */
+DoMini._fn.ElementArrayFromAny = DoMini._fn.elementArrayFromAny;
 
 DoMini._fn.absolutePosition = function(el) {
     if ( !el.getClientRects().length ) {

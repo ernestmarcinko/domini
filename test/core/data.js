@@ -4,8 +4,7 @@ QUnit.module("data.js tests", function(hooks) {
         var f = document.getElementById('qunit-fixture');
         f.innerHTML = fixture;
     });
-
-    QUnit.test('val()', function(assert) {    
+    QUnit.test('val()', function(assert) {
         assert.equal($().val(), undefined, 'invalid element #1');
         assert.equal($('div').val(), undefined, 'invalid element #2');
         assert.equal($('select[name=single_select]').val(), 'value 4', 'single select value');
@@ -15,7 +14,8 @@ QUnit.module("data.js tests", function(hooks) {
         );
     });
 
-    QUnit.test('attr()', function(assert) {    
+
+    QUnit.test('attr()', function(assert) {
         assert.equal($().attr('id'), undefined, 'invalid element #1');
         assert.equal($().attr('id', 'fakeId'), undefined, 'invalid element #2');
         assert.equal($('#node').attr('id'), 'node', 'ID test');
@@ -28,7 +28,7 @@ QUnit.module("data.js tests", function(hooks) {
         $('*[id=yolo]').removeAttr('id');
     });
 
-    QUnit.test('prop()', function(assert) {    
+    QUnit.test('prop()', function(assert) {
         assert.equal($().prop('randomProp'), undefined, 'invalid element #1');
         assert.deepEqual($().prop('randomProp', 'propValue'), $(), 'invalid element #2');
         assert.equal($('#node').prop('randomProp'), undefined, 'propValue test');
@@ -38,14 +38,14 @@ QUnit.module("data.js tests", function(hooks) {
 
         $('#list-container li').prop('randomProp', 'yolo');
         assert.deepEqual($('#list-container li').prop('randomProp'), 'yolo', 'Multiple Attributes check');
-        
+
         document.querySelectorAll("#list-container li").forEach(function(el, i){
             assert.equal(el['randomProp'],  'yolo', "Deep check el #" + i);
             assert.equal($($('#list-container li').get(i)).prop('randomProp'), 'yolo', "Deep check via DoMini #" + i);
         });
     });
 
-    QUnit.test('data()', function(assert) {    
+    QUnit.test('data()', function(assert) {
         assert.equal($().data('id'), '', 'invalid element #1');
         assert.deepEqual($().data('id', 'fakeDataId'), $(), 'invalid element #2');
         assert.equal($('#node').attr('id'), 'node', 'ID test');
@@ -58,7 +58,7 @@ QUnit.module("data.js tests", function(hooks) {
     });
 
 
-    QUnit.test('html()', function(assert) {    
+    QUnit.test('html()', function(assert) {
         var nodeContent = document.getElementById('node').innerHTML;
         assert.equal($().html(), '', 'invalid element #1');
         assert.equal($('null').html(), '', 'invalid element #2');
@@ -67,7 +67,7 @@ QUnit.module("data.js tests", function(hooks) {
         assert.notEqual($('#node').html(), '');
     });
 
-    QUnit.test('text()', function(assert) {    
+    QUnit.test('text()', function(assert) {
         var title = document.getElementById('title').textContent;
         assert.equal($().text(), '', 'invalid element #1');
         assert.equal($('null').text(), '', 'invalid element #2');

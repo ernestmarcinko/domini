@@ -1,0 +1,235 @@
+declare module "domini" {
+	type ElementWithFields = Element&{[otherFields: string]: unknown;};
+
+	interface DOMini extends Array<ElementWithFields> {
+		(selector?: string|Element): this;
+		fn: {
+			_: (selector: string) => Array<ElementWithFields>,
+
+			ajax: (args: {
+				'url': string,
+				'method'?: XMLHttpRequest.HttpMethod,
+				'cors'?: 'cors'|'no-cors', // cors, no-cors
+				'data'?: unknown,
+				'success'?: (response_text: string) => void,
+				'fail'?: (request: XMLHttpRequest) => void,
+				'accept'?: string,
+				'contentType'?: XMLHttpRequest.ContentType
+			} = {
+				'url': '',
+				'method': 'GET',
+				'cors': 'cors', // cors, no-cors
+				'data': {},
+				'success': null,
+				'fail': null,
+				'accept': 'text/html',
+				'contentType': 'application/x-www-form-urlencoded; charset=UTF-8'
+			}) => void,
+		},
+		_fn: {
+			plugin: (name: string, object: Object) => this,
+
+			bodyTransform: () => {
+				top: number,
+				left: number,
+			},
+
+			bodyTransformY: () => number,
+
+			bodyTransformX: () => number,
+
+			hasFixedParent: (element: Element) => boolean,
+
+			hasEventListener: (element: Element, event_type: string, func: Function) => boolean,
+
+			allDescendants: (element: Element) => Array<Element>,
+
+			createElementsFromHTML: (html_string: string) => Array<Element>,
+
+			elementArrayFromAny: (anything: string|Element|Element[]|DOMini) => Array<Element>,
+
+			absolutePosition: (element: Element) => {
+				top: number,
+				left: number,
+			},
+		}
+		add: (selector: string|Element) => this,
+
+		css: {
+			(properties: Record<string, unknown>): this;
+			(property: string, value: unknown): this;
+		},
+
+		hasClass: (className: string) => boolean,
+
+		addClass: (className: string) => this,
+
+		removeClass: (className: string) => this,
+
+		/**
+		 * Checks if element is visible
+		 */
+		isVisible: () => boolean,
+
+		val: {
+			(value: string|number|string[]|number[]): this;
+			(): string|number|string[]|number[];
+		},
+
+		attr: {
+			(attributes: Record<string, unknown>): this;
+			(attribute: string, value: unknown): this;
+			(attribute: string): unknown;
+		},
+
+		removeAttr: (attribute: string) => this,
+
+		prop: {
+			(attribute: string, value: unknown): this;
+			(attribute: string): unknown;
+		},
+
+		data: {
+			(key: string, value: unknown): this;
+			(key: string): string;
+		},
+
+		html: {
+			(html: string): this;
+			(): string;
+		},
+
+		text: {
+			(text: string): this;
+			(): string;
+		},
+
+		extend: (...args: Object) => Object,
+
+		each: (callback: (index?: number, node?: ElementWithFields, array?: ElementWithFields[])=>unknown) => this
+
+		forEach: (callback: (node?: ElementWithFields, index?: number, array?: ElementWithFields[])=>unknown) => this
+
+		get: (n: number) => ElementWithFields,
+
+		offset: ()=> {
+			top: number,
+			left: number,
+		},
+
+		position: () => {
+			top: number,
+			left: number,
+		},
+
+		outerWidth: (includeMargin?: boolean = false) => number,
+		outerHeight: (includeMargin?: boolean = false) => number,
+
+		noPaddingWidth: (includeMargin?: boolean = false) => number,
+		noPaddingHeight: (includeMargin?: boolean = false) => number,
+
+		innerWidth: () => number,
+		innerHeight: () => number,
+
+		/**
+		 * Same as `outerWidth(false)`
+		 */
+		width: () => number,
+
+		/**
+		 * Same as `outerHeight(false)`
+		 */
+		height: () => number,
+
+		on: {
+			(events: string, callback: (event:Event)=>void): this,
+			(events: string, selector: string, callback: (event:Event)=>void): this,
+		},
+
+		off: {
+			(): this,
+			(events: string): this,
+			(events: string, callback: Function): this
+		},
+
+		offForced: ()=> this,
+
+		trigger: (event: string, args:unknown[], native: boolean = false, jquery: boolean = false) => this,
+
+		/**
+		 * Removes all DoMini related event listeners
+		 */
+		clear: () => this,
+
+		clone: () => this,
+
+		detach: (context?: string|Element) => this,
+
+		remove: (context?: string|Element) => this,
+
+		prepend: (prepend: string|Element|Element[]|DOMini) => this,
+
+		append: (prepend: string|Element|Element[]|DOMini) => this,
+
+		is: (selectors: string) => boolean,
+
+		parent: (selectors?: string) => this,
+
+		copy: (source: Object<unknown>|Array<unknown>, deep?: boolean = false) => typeof source,
+
+		first: () => this,
+
+		last: () => this,
+
+		prev: (selectors?: string) => this,
+
+		next: (selectors?: string) => this,
+
+		closest: (selectors?: string|Element|DOMini) => this,
+
+		find: (selectors?: string) => this,
+
+		animate: {
+			(props: false|Record<string, number>, duration?: number = 200, easing?: keyof DOMini.animate.easing),
+			easing: Record<string, (x: number)=>number>,
+		},
+
+		unhighlight: (options?: {
+			className?: string,
+			element?: 'span'
+		} = {
+			className: 'highlight',
+			element: 'span'
+		}) => this,
+
+		highlight: (word: string, options?: {
+			className?: string,
+			element?: string,
+			caseSensitive?: boolean,
+			wordsOnly?: boolean,
+			excludeParents?: string
+		} = {
+			className: 'highlight',
+			element: 'span',
+			caseSensitive: false,
+			wordsOnly: false,
+			excludeParents: '.excludeFromHighlight'
+		}) => this,
+
+		serialize: () => string,
+
+		serializeObject: (object: Object<unknown>, prefix: string) => string,
+
+		inViewPort: (tolerance: number = 0, viewport: Element = window) => boolean,
+
+		/**
+		 * Addons and other possibly dynamically added fields
+		 */
+		[otherFields: string]: (...args:unknown)=>this | unknown;
+	}
+
+	import {DOMini} from "./types";
+	declare const DoMini: DOMini;
+
+	export=DoMini;
+}
