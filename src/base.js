@@ -20,7 +20,7 @@ if ( typeof window.DoMini == 'undefined' ) {
 
         //if ( arguments.length >= 1 ) {
             // Case of DoMini(function($){..})
-            if ( arguments.length == 1 && typeof arguments[0] == 'function' ) {
+            if ( arguments.length === 1 && typeof arguments[0] == 'function' ) {
                 if (document.readyState === "complete" || document.readyState === "loaded"  || document.readyState === "interactive") {
                     arguments[0].apply(this, [DoMini]);
                 } else {
@@ -78,7 +78,7 @@ if ( typeof window.DoMini == 'undefined' ) {
         push: Array.prototype.push,
         pop: Array.prototype.pop,
         sort: Array.prototype.sort,
-        splice: Array.prototype.splice
+        splice: Array.prototype.splice,
     }
 
     // Define the iterator symbol to the array iterator, allows "for of.." and derivates
@@ -86,6 +86,8 @@ if ( typeof window.DoMini == 'undefined' ) {
 
     // Utility functions container
     DoMini._fn = {};
+
+    DoMini.version = "0.2.5";
 } else {
     DoMini = window.DoMini;
 }

@@ -41,13 +41,13 @@ DoMini.fn.highlight = function (words, options) {
         words = [words];
     }
     words = words.filter(function(el){
-        return el != '';
+        return el !== '';
     });
     words.forEach(function(w, i, o){
         o[i] = w.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     });
 
-    if (words.length == 0) {
+    if (words.length === 0) {
         return this;
     }
 
@@ -58,7 +58,7 @@ DoMini.fn.highlight = function (words, options) {
     }
     let re = new RegExp(pattern, flag);
     function highlight(node, re, nodeName, className, excludeParents) {
-        excludeParents = excludeParents == '' ? $.fn.highlight.defaults : excludeParents;
+        excludeParents = excludeParents === '' ? $.fn.highlight.defaults : excludeParents;
         if (node.nodeType === 3) {
             if ( !$(node.parentNode).is(excludeParents) ) {
                 let normalized = node.data.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
