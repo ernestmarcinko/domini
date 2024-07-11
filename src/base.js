@@ -87,7 +87,7 @@ if ( typeof window.DoMini == 'undefined' ) {
     // Utility functions container
     DoMini._fn = {};
 
-    DoMini.version = "0.2.5";
+    DoMini.version = "0.2.6";
 } else {
     DoMini = window.DoMini;
 }
