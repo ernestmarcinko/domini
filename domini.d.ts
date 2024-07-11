@@ -202,7 +202,7 @@ declare module "domini" {
 			element: 'span'
 		}) => this,
 
-		highlight: (word: string, options?: {
+		highlight: (word: string|string[], options?: {
 			className?: string,
 			element?: string,
 			caseSensitive?: boolean,
