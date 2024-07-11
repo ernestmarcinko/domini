@@ -1,10 +1,10 @@
 declare module "domini" {
-	type ElementWithFields = Element&{[otherFields: string]: unknown;};
+	type HTMLElementWithFields = HTMLElement&{[otherFields: string]: unknown;};
 
-	interface DOMini extends Array<ElementWithFields> {
-		(selector?: string|Element): this;
+	interface DOMini extends Array<HTMLElementWithFields> {
+		(selector?: string|HTMLElement): this;
 		fn: {
-			_: (selector: string) => Array<ElementWithFields>,
+			_: (selector: string) => Array<HTMLElementWithFields>,
 
 			ajax: (args: {
 				'url': string,
@@ -38,22 +38,22 @@ declare module "domini" {
 
 			bodyTransformX: () => number,
 
-			hasFixedParent: (element: Element) => boolean,
+			hasFixedParent: (element: HTMLElement) => boolean,
 
-			hasEventListener: (element: Element, event_type: string, func: Function) => boolean,
+			hasEventListener: (element: HTMLElement, event_type: string, func: Function) => boolean,
 
-			allDescendants: (element: Element) => Array<Element>,
+			allDescendants: (element: HTMLElement) => Array<HTMLElement>,
 
-			createElementsFromHTML: (html_string: string) => Array<Element>,
+			createElementsFromHTML: (html_string: string) => Array<HTMLElement>,
 
-			elementArrayFromAny: (anything: string|Element|Element[]|DOMini) => Array<Element>,
+			elementArrayFromAny: (anything: string|HTMLElement|HTMLElement[]|DOMini) => Array<HTMLElement>,
 
-			absolutePosition: (element: Element) => {
+			absolutePosition: (element: HTMLElement) => {
 				top: number,
 				left: number,
 			},
 		}
-		add: (selector: string|Element) => this,
+		add: (selector: string|HTMLElement) => this,
 
 		css: {
 			(properties: Record<string, unknown>): this;
@@ -106,11 +106,11 @@ declare module "domini" {
 
 		extend: (...args: Object) => Object,
 
-		each: (callback: (index?: number, node?: ElementWithFields, array?: ElementWithFields[])=>unknown) => this
+		each: (callback: (index?: number, node?: HTMLElementWithFields, array?: HTMLElementWithFields[])=>unknown) => this
 
-		forEach: (callback: (node?: ElementWithFields, index?: number, array?: ElementWithFields[])=>unknown) => this
+		forEach: (callback: (node?: HTMLElementWithFields, index?: number, array?: HTMLElementWithFields[])=>unknown) => this
 
-		get: (n: number) => ElementWithFields,
+		get: (n: number) => HTMLElementWithFields,
 
 		offset: ()=> {
 			top: number,
@@ -163,13 +163,13 @@ declare module "domini" {
 
 		clone: () => this,
 
-		detach: (context?: string|Element) => this,
+		detach: (context?: string|HTMLElement) => this,
 
-		remove: (context?: string|Element) => this,
+		remove: (context?: string|HTMLElement) => this,
 
-		prepend: (prepend: string|Element|Element[]|DOMini) => this,
+		prepend: (prepend: string|HTMLElement|HTMLElement[]|DOMini) => this,
 
-		append: (prepend: string|Element|Element[]|DOMini) => this,
+		append: (prepend: string|HTMLElement|HTMLElement[]|DOMini) => this,
 
 		is: (selectors: string) => boolean,
 
@@ -185,7 +185,7 @@ declare module "domini" {
 
 		next: (selectors?: string) => this,
 
-		closest: (selectors?: string|Element|DOMini) => this,
+		closest: (selectors?: string|HTMLElement|DOMini) => this,
 
 		find: (selectors?: string) => this,
 
@@ -220,7 +220,7 @@ declare module "domini" {
 
 		serializeObject: (object: Object<unknown>, prefix: string) => string,
 
-		inViewPort: (tolerance: number = 0, viewport: Element = window) => boolean,
+		inViewPort: (tolerance: number = 0, viewport: HTMLElement = window) => boolean,
 
 		/**
 		 * Addons and other possibly dynamically added fields
