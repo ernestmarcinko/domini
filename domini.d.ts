@@ -110,7 +110,10 @@ declare module "domini" {
 
 		forEach: (callback: (node?: HTMLElementWithFields, index?: number, array?: HTMLElementWithFields[])=>unknown) => this
 
-		get: (n: number) => HTMLElementWithFields,
+		get: {
+			(): HTMLElementWithFields[],
+			(n: number): HTMLElementWithFields|undefined,
+		},
 
 		offset: ()=> {
 			top: number,
@@ -228,7 +231,6 @@ declare module "domini" {
 		[otherFields: string]: (...args:unknown)=>this | unknown;
 	}
 
-	import {DOMini} from "./types";
 	declare const DoMini: DOMini;
 
 	export=DoMini;
